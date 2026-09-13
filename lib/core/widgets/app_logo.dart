@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:hungry_food_app/core/constants/app_colors.dart';
 
 class AppLogo extends StatefulWidget {
   final String text;
@@ -13,7 +14,7 @@ class AppLogo extends StatefulWidget {
     super.key,
     this.text = 'Hungry',
     this.fontSize = 48,
-    this.textColor = Colors.white,
+    this.textColor = AppColors.secondary,
     this.questionMarkColor,
     this.onTap,
     this.animateQuestionMark = true,
@@ -41,7 +42,7 @@ class _AppLogoState extends State<AppLogo> with SingleTickerProviderStateMixin {
     _rotationAnimation =
         Tween<double>(
           begin: -0.08, // ميلان لليسار قليلاً
-          end: 0.12, // ميلان لليمين مع هزة خفيفة
+          end: 0.1, // ميلان لليمين مع هزة خفيفة
         ).animate(
           CurvedAnimation(parent: _controller, curve: Curves.easeInOutSine),
         );
@@ -49,7 +50,7 @@ class _AppLogoState extends State<AppLogo> with SingleTickerProviderStateMixin {
     // نبضة حجم طفيفة مرافقة للميلان
     _scaleAnimation = Tween<double>(
       begin: 1.0,
-      end: 1.1,
+      end: 1.15,
     ).animate(CurvedAnimation(parent: _controller, curve: Curves.easeInOut));
 
     if (widget.animateQuestionMark) {
@@ -98,6 +99,7 @@ class _AppLogoState extends State<AppLogo> with SingleTickerProviderStateMixin {
               alignment: Alignment.bottomCenter,
               transform: Matrix4.identity()
                 ..rotateZ(_rotationAnimation.value)
+                // ignore: deprecated_member_use
                 ..scale(_scaleAnimation.value),
               child: child,
             );
