@@ -5,14 +5,17 @@ import 'package:hungry_food_app/core/widgets/app_logo.dart';
 import 'package:hungry_food_app/core/widgets/custom_button.dart';
 import 'package:hungry_food_app/core/widgets/custom_text_form_field.dart';
 
-class SignInView extends StatelessWidget {
-  const SignInView({super.key});
+class SignUpView extends StatelessWidget {
+  const SignUpView({super.key});
 
   @override
   Widget build(BuildContext context) {
     // controllers for the text fields
+    TextEditingController nameController = TextEditingController();
     TextEditingController emailController = TextEditingController();
     TextEditingController passwordController = TextEditingController();
+    TextEditingController confirmPasswordController = TextEditingController();
+
     //key for the form
     final GlobalKey<FormState> formKey = GlobalKey<FormState>();
 
@@ -30,8 +33,13 @@ class SignInView extends StatelessWidget {
               children: [
                 // logo
                 AppLogo(animateQuestionMark: false),
-                const Gap(10),
+                const Gap(20),
                 // text fields
+                CustomTextFormField(
+                  labelText: 'Full Name',
+                  controller: nameController,
+                ),
+                const Gap(10),
                 CustomTextFormField(
                   labelText: 'Email',
                   controller: emailController,
@@ -43,23 +51,31 @@ class SignInView extends StatelessWidget {
                   controller: passwordController,
                 ),
                 const Gap(10),
+                CustomTextFormField(
+                  labelText: 'Confirm Password',
+                  isPassword: true,
+                  controller: confirmPasswordController,
+                ),
+                const Gap(30),
                 // button
                 CustomButton(
                   buttonColor: AppColors.secondary,
-                  buttonText: 'Sign In',
+                  buttonText: 'Sign Up',
                   onTap: () {
                     if (formKey.currentState!.validate()) {
-                      // Perform sign-in logic here
+                      // Perform sign-up logic here
                       String email = emailController.text;
                       String password = passwordController.text;
+                      String name = nameController.text;
                       // You can call your authentication service here
                       // ignore: avoid_print
                       print(
-                        '❤️Success Login \n Email: $email, Password: $password',
+                        '❤️Success Login \n name: $name, Email: $email, Password: $password',
                       );
                     }
                   },
                 ),
+                const Gap(30),
               ],
             ),
           ),
