@@ -35,7 +35,7 @@ class _AppLogoState extends State<AppLogo> with SingleTickerProviderStateMixin {
 
     _controller = AnimationController(
       vsync: this,
-      duration: const Duration(milliseconds: 2000),
+      duration: const Duration(milliseconds: 1000),
     );
 
     // حركة ميلان بسيطة توحي بالتساؤل والحيرة
