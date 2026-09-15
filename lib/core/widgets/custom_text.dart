@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:hungry_food_app/core/constants/app_colors.dart';
 
 class CustomText extends StatelessWidget {
@@ -10,8 +9,8 @@ class CustomText extends StatelessWidget {
     this.size = 12,
     this.fontWeight = FontWeight.normal,
     this.textAlign = Alignment.center,
-    this.baseTextStyle,
     this.padding = 8,
+    this.fontFamily = 'LuckiestGuy',
   });
 
   final String text;
@@ -19,18 +18,24 @@ class CustomText extends StatelessWidget {
   final double size;
   final FontWeight fontWeight;
   final Alignment textAlign;
-  final TextStyle? baseTextStyle;
+  final String fontFamily;
   final double padding;
 
   @override
   Widget build(BuildContext context) {
-    final effectiveStyle =
-        baseTextStyle ?? GoogleFonts.luckiestGuy(fontSize: size, color: color);
+
     return Padding(
       padding: EdgeInsets.symmetric(horizontal: padding),
       child: Align(
         alignment: textAlign,
-        child: Text(text, style: effectiveStyle),
+        child: Text(
+          text,
+          style: TextStyle(
+            fontFamily: fontFamily,
+            fontSize: size,
+            color: color,
+          ),
+        ),
       ),
     );
   }

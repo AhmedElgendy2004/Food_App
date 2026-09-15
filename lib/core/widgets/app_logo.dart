@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:hungry_food_app/core/constants/app_colors.dart';
 
 class AppLogo extends StatefulWidget {
@@ -81,17 +80,19 @@ class _AppLogoState extends State<AppLogo> with SingleTickerProviderStateMixin {
   Widget build(BuildContext context) {
     final effectiveQuestionColor = widget.questionMarkColor ?? widget.textColor;
 
-    final baseTextStyle = GoogleFonts.luckiestGuy(
-      fontSize: widget.fontSize,
-      color: widget.textColor,
-    );
-
     Widget content = Row(
       mainAxisSize: MainAxisSize.min,
       crossAxisAlignment: CrossAxisAlignment.baseline,
       textBaseline: TextBaseline.alphabetic,
       children: [
-        Text(widget.text, style: baseTextStyle),
+        Text(
+          widget.text,
+          style: TextStyle(
+            fontFamily: 'LuckiestGuy',
+            fontSize: widget.fontSize,
+            color: widget.textColor,
+          ),
+        ),
         AnimatedBuilder(
           animation: _controller,
           builder: (context, child) {
@@ -99,14 +100,25 @@ class _AppLogoState extends State<AppLogo> with SingleTickerProviderStateMixin {
               alignment: Alignment.bottomCenter,
               transform: Matrix4.identity()
                 ..rotateZ(_rotationAnimation.value)
-                // ignore: deprecated_member_use
-                ..scale(_scaleAnimation.value),
+                ..multiply(
+                  Matrix4.diagonal3Values(
+                    _scaleAnimation.value,
+                    _scaleAnimation.value,
+                    1.0,
+                  ),
+                ),
               child: child,
             );
           },
-          child: Text(
-            ' ?',
-            style: baseTextStyle.copyWith(color: effectiveQuestionColor),
+          child: RepaintBoundary(
+            child: Text(
+              ' ?',
+              style: TextStyle(
+                fontFamily: 'LuckiestGuy',
+                fontSize: widget.fontSize,
+                color: effectiveQuestionColor,
+              ),
+            ),
           ),
         ),
       ],

@@ -14,7 +14,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'Hungry App',
-      home: Root(),
+      home: SplashView(),
     );
   }
 }
