@@ -4,7 +4,7 @@ import 'package:hungry_food_app/core/constants/app_colors.dart';
 class AppLogo extends StatefulWidget {
   final String text;
   final double fontSize;
-  final Color textColor;
+  final Color color;
   final Color? questionMarkColor;
   final VoidCallback? onTap;
   final bool animateQuestionMark;
@@ -13,7 +13,7 @@ class AppLogo extends StatefulWidget {
     super.key,
     this.text = 'Hungry',
     this.fontSize = 48,
-    this.textColor = AppColors.secondary,
+    this.color = AppColors.secondary,
     this.questionMarkColor,
     this.onTap,
     this.animateQuestionMark = true,
@@ -78,10 +78,11 @@ class _AppLogoState extends State<AppLogo> with SingleTickerProviderStateMixin {
 
   @override
   Widget build(BuildContext context) {
-    final effectiveQuestionColor = widget.questionMarkColor ?? widget.textColor;
+    final effectiveQuestionColor = widget.questionMarkColor ?? widget.color;
 
     Widget content = Row(
       mainAxisSize: MainAxisSize.min,
+      mainAxisAlignment: MainAxisAlignment.start,
       crossAxisAlignment: CrossAxisAlignment.baseline,
       textBaseline: TextBaseline.alphabetic,
       children: [
@@ -90,7 +91,7 @@ class _AppLogoState extends State<AppLogo> with SingleTickerProviderStateMixin {
           style: TextStyle(
             fontFamily: 'LuckiestGuy',
             fontSize: widget.fontSize,
-            color: widget.textColor,
+            color: widget.color,
           ),
         ),
         AnimatedBuilder(

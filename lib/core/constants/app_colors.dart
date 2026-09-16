@@ -1,4 +1,3 @@
-import 'dart:ui';
 
 import 'package:flutter/material.dart';
 
@@ -7,6 +6,7 @@ class AppColors {
   static const Color secondary = Color(0xFFFFEDEE);
   static const Color selected = Colors.white;
   static const Color unselected = Colors.grey;
+  static const Color categoryButton = Color(0xFFF3F4F6);
 
   // static const Color textColor1 = Color(0xFF0D1030);
   // static const Color textColor2 = Color(0xFF7C7C7C);

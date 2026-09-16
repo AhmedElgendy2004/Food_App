@@ -6,8 +6,8 @@ class CustomText extends StatelessWidget {
     super.key,
     required this.text,
     this.color = AppColors.secondary,
-    this.size = 12,
-    this.fontWeight = FontWeight.normal,
+    this.size = 14,
+    this.fontWeight = FontWeight.w200,
     this.textAlign = Alignment.center,
     this.padding = 8,
     this.fontFamily = 'LuckiestGuy',
@@ -23,7 +23,6 @@ class CustomText extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-
     return Padding(
       padding: EdgeInsets.symmetric(horizontal: padding),
       child: Align(
