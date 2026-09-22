@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_gap/flutter_gap.dart';
 import 'package:hungry_food_app/core/constants/app_assets.dart';
-import 'package:hungry_food_app/core/constants/app_colors.dart';
-import 'package:hungry_food_app/core/widgets/custom_button.dart';
 import 'package:hungry_food_app/features/product/widgets/total_section.dart';
 import 'package:hungry_food_app/features/product/widgets/spicy_selector_bar.dart';
 import 'package:hungry_food_app/features/product/widgets/topping_card.dart';
@@ -96,7 +94,10 @@ class ProductDetailsView extends StatelessWidget {
               const Gap(20),
 
               /// Total Section
-              const TotalSection(accountTotal: 18.19),
+              const TotalSection(
+                accountTotal: 18.19,
+                textButton: 'Add To Cart',
+              ),
             ],
           ),
         ),

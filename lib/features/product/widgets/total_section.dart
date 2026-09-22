@@ -4,9 +4,10 @@ import 'package:hungry_food_app/core/constants/app_colors.dart';
 import 'package:hungry_food_app/core/widgets/custom_button.dart';
 
 class TotalSection extends StatelessWidget {
-  const TotalSection({super.key, this.accountTotal = 18.19});
+  const TotalSection({super.key, this.accountTotal = 18.19, required this.textButton});
 
   final double accountTotal;
+  final String textButton ;
 
   @override
   Widget build(BuildContext context) {
@@ -35,7 +36,7 @@ class TotalSection extends StatelessWidget {
             flex: 3,
             child: CustomButton(
               buttonColor: AppColors.primary,
-              buttonText: "Add To Cart",
+              buttonText: textButton,
               height: 60,
               radius: 18,
             ),

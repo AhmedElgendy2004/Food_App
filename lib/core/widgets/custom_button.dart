@@ -14,6 +14,7 @@ class CustomButton extends StatelessWidget {
     this.margin = EdgeInsets.zero,
     this.textSize = 17,
     this.radius = 10,
+    this.enableAnimation = true,
   });
 
   final String buttonText;
@@ -22,13 +23,14 @@ class CustomButton extends StatelessWidget {
   final double width;
   final double height;
   final double radius;
-
   final EdgeInsetsGeometry margin;
   final double textSize;
+  final bool enableAnimation;
 
   @override
   Widget build(BuildContext context) {
     return TapEffect(
+      enableAnimation: enableAnimation,
       onClick: onTap,
       child: Container(
         margin: margin,
@@ -39,7 +41,6 @@ class CustomButton extends StatelessWidget {
           border: Border.all(color: AppColors.secondary, width: 4),
           borderRadius: BorderRadius.circular(radius),
         ),
-
         child: CustomText(
           text: buttonText,
           size: textSize,

@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:hungry_food_app/features/cart/widgets/card_cart_item.dart';
+import 'package:hungry_food_app/features/product/widgets/total_section.dart';
 
 class CartView extends StatelessWidget {
   const CartView({super.key});
@@ -6,8 +8,24 @@ class CartView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Center(
-        child: Text('Cart'),
+      body: Padding(
+        padding: const EdgeInsets.all(14.0),
+        child: Column(
+          children: [
+            /// Cart Items List
+            Expanded(
+              child: ListView.builder(
+                itemCount: 4,
+                itemBuilder: (context, index) {
+                  return const CardCartItem();
+                },
+              ),
+            ),
+
+            /// Total Section
+            const TotalSection(accountTotal: 18.19, textButton: 'Add To Cart'),
+          ],
+        ),
       ),
     );
   }
