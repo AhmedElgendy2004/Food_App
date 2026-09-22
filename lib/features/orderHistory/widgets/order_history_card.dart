@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_gap/flutter_gap.dart';
 import 'package:hungry_food_app/core/constants/app_assets.dart';
-import 'package:hungry_food_app/core/constants/app_colors.dart';
 import 'package:hungry_food_app/core/widgets/custom_button.dart';
 
 class OrderHistoryCard extends StatelessWidget {
@@ -41,7 +40,6 @@ class OrderHistoryCard extends StatelessWidget {
               ],
             ),
             CustomButton(
-              buttonColor: AppColors.primary,
               buttonText: "re  Order",
               radius: 18,
             ),

@@ -67,7 +67,6 @@ class SignUpView extends StatelessWidget {
                         Expanded(
                           flex: 1,
                           child: CustomButton(
-                            buttonColor: AppColors.primary,
                             buttonText: 'Sign in',
                             textSize: 12,
                             onTap: () {

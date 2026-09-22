@@ -6,7 +6,7 @@ import 'package:hungry_food_app/core/widgets/tap_effect.dart';
 class CustomButton extends StatelessWidget {
   const CustomButton({
     super.key,
-    required this.buttonColor,
+    this.buttonColor = AppColors.primary,
     required this.buttonText,
     this.height = 50,
     this.onTap,

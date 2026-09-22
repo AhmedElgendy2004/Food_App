@@ -23,7 +23,6 @@ class _QuantitySelectorState extends State<QuantitySelector> {
             CustomButton(
               enableAnimation: false,
 
-              buttonColor: AppColors.primary,
               buttonText: "-",
               textSize: 24,
               onTap: () {
@@ -38,12 +37,16 @@ class _QuantitySelectorState extends State<QuantitySelector> {
               width: 40,
               height: 40,
             ),
-            const Gap(15),
-            CustomText(text: "$quantity", color: AppColors.primary, size: 20),
-            const Gap(15),
+            SizedBox(
+              width: 50,
+              child: CustomText(
+                text: "$quantity",
+                color: AppColors.primary,
+                size: 20,
+              ),
+            ),
             CustomButton(
               enableAnimation: false,
-              buttonColor: AppColors.primary,
               buttonText: "+",
               textSize: 24,
               onTap: () {
@@ -61,7 +64,6 @@ class _QuantitySelectorState extends State<QuantitySelector> {
         /// Remove Button
         CustomButton(
           enableAnimation: false,
-          buttonColor: AppColors.primary,
           buttonText: "Remove",
           onTap: () {
             setState(() {
