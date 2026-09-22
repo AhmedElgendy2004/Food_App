@@ -85,6 +85,7 @@ class _AppLogoState extends State<AppLogo> with SingleTickerProviderStateMixin {
       mainAxisAlignment: MainAxisAlignment.start,
       crossAxisAlignment: CrossAxisAlignment.baseline,
       textBaseline: TextBaseline.alphabetic,
+    
       children: [
         Text(
           widget.text,

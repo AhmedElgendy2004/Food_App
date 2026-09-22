@@ -1,12 +1,11 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gap/flutter_gap.dart';
 import 'package:hungry_food_app/core/constants/app_colors.dart';
-import 'package:hungry_food_app/core/widgets/app_logo.dart';
 import 'package:hungry_food_app/features/home/widgets/cart_items.dart';
 import 'package:hungry_food_app/features/home/widgets/categories_bar.dart';
 import 'package:hungry_food_app/features/home/widgets/home_app_bar.dart';
 import 'package:hungry_food_app/features/home/widgets/search_field.dart';
+import 'package:hungry_food_app/features/product/view/product_details_view.dart';
 
 class HomeView extends StatefulWidget {
   const HomeView({super.key});
@@ -25,26 +24,32 @@ class _HomeViewState extends State<HomeView> {
           padding: const EdgeInsets.symmetric(horizontal: 14.0),
           child: CustomScrollView(
             slivers: [
-              ///AppBar
-              SliverToBoxAdapter(
-                child: Column(
+              SliverAppBar(
+                pinned: true,
+                backgroundColor: AppColors.background,
+                toolbarHeight: 200,
+                surfaceTintColor: Colors.transparent,
+                flexibleSpace: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    const Gap(45),
-
-                    /// App bar
+                    /// App Logo and User Name
+                    const Gap(30),
                     const HomeAppBar(),
                     const Gap(10),
 
                     /// search bar
                     SearchField(),
-                    Gap(20),
+                    const Gap(10),
 
                     /// categories
                     const CategoriesBar(),
-                    Gap(20),
+                    const Gap(10),
                   ],
                 ),
               ),
+
+              /// Spacing
+              SliverToBoxAdapter(child: const Gap(10)),
 
               /// Cart Items
               SliverGrid(
@@ -58,7 +63,17 @@ class _HomeViewState extends State<HomeView> {
                   BuildContext context,
                   int index,
                 ) {
-                  return CartItems();
+                  return GestureDetector(
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => const ProductDetailsView(),
+                        ),
+                      );
+                    },
+                    child: CartItems(),
+                  );
                 }, childCount: 10),
               ),
             ],

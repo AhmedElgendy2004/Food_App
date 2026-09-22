@@ -13,7 +13,6 @@ class HomeAppBar extends StatelessWidget {
         Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           mainAxisSize: MainAxisSize.min,
-
           children: [
             AppLogo(
               fontSize: 42,
