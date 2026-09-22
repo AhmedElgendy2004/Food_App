@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:hungry_food_app/core/constants/app_colors.dart';
 import 'package:hungry_food_app/core/widgets/custom_text.dart';
+import 'package:hungry_food_app/core/widgets/tap_effect.dart';
 
 class CustomButton extends StatelessWidget {
   const CustomButton({
@@ -27,8 +28,8 @@ class CustomButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: onTap,
+    return TapEffect(
+      onClick: onTap,
       child: Container(
         margin: margin,
         height: height,

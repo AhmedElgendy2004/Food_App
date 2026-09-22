@@ -87,7 +87,8 @@ class _ToppingCardState extends State<ToppingCard> {
                       Container(color: Colors.black.withValues(alpha: 0.45)),
                       Positioned(
                         top: 6,
-                        left: 6,
+                        right: 6,
+
                         child: _actionButton(
                           icon: Icons.remove,
                           bg: Colors.white,
@@ -97,7 +98,8 @@ class _ToppingCardState extends State<ToppingCard> {
                       ),
                       Positioned(
                         top: 6,
-                        right: 6,
+                        left: 6,
+
                         child: _actionButton(
                           icon: Icons.close,
                           bg: const Color(0xFFE53935),
