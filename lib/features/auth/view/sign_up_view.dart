@@ -42,138 +42,141 @@ class _SignUpViewState extends State<SignUpView> {
     return GestureDetector(
       onTap: () => FocusScope.of(context).unfocus(),
       child: Scaffold(
-        backgroundColor: AppColors.primary,
+        backgroundColor: AppColors.background,
         body: SafeArea(
-          child: Center(
-            child: SingleChildScrollView(
-              child: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 10.0),
-                child: Form(
-                  key: formKey,
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      // 1. Logo Hero
-                      const Hero(
-                        tag: 'app_logo_hero',
-                        child: Material(
-                          color: Colors.transparent,
-                          child: AppLogo(animateQuestionMark: false),
-                        ),
-                      ),
-                      const Gap(20),
-
-                      // حقل خاص بهذه الشاشة فقط (ينزلق تلقائياً مع الراوت)
-                      CustomTextFormField(
-                        labelText: 'Full Name',
-                        controller: nameController,
-                      ),
-                      const Gap(10),
-
-                      // 2. Email Field Hero
-                      Hero(
-                        tag: 'email_field_hero',
-                        flightShuttleBuilder: _flightShuttleBuilder,
-                        child: Material(
-                          color: Colors.transparent,
-                          child: CustomTextFormField(
-                            labelText: 'Email',
-                            controller: emailController,
-                          ),
-                        ),
-                      ),
-                      const Gap(10),
-
-                      // 3. Password Field Hero
-                      Hero(
-                        tag: 'password_field_hero',
-                        flightShuttleBuilder: _flightShuttleBuilder,
-                        child: Material(
-                          color: Colors.transparent,
-                          child: CustomTextFormField(
-                            labelText: 'Password',
-                            isPassword: true,
-                            controller: passwordController,
-                          ),
-                        ),
-                      ),
-                      const Gap(10),
-
-                      // حقل خاص بهذه الشاشة فقط
-                      CustomTextFormField(
-                        labelText: 'Confirm Password',
-                        isPassword: true,
-                        controller: confirmPasswordController,
-                      ),
-                      const Gap(40),
-
-                      // 4. Buttons Hero
-                      Row(
+          bottom: false,
+          child: LayoutBuilder(
+            builder: (context, constraints) {
+              return SingleChildScrollView(
+                physics: const ClampingScrollPhysics(),
+                child: ConstrainedBox(
+                  constraints: BoxConstraints(minHeight: constraints.maxHeight),
+                  child: IntrinsicHeight(
+                    child: Form(
+                      key: formKey,
+                      child: Column(
                         children: [
-                          Expanded(
-                            flex: 1,
-                            child: Hero(
-                              tag: 'secondary_action_btn_hero',
-                              flightShuttleBuilder: _flightShuttleBuilder,
-                              child: Material(
-                                color: Colors.transparent,
-                                child: CustomButton(
-                                  buttonText: '<<-- Sign in',
-                                  textSize: 12,
-                                  onTap: () => Navigator.pop(context),
-                                ),
+                          const Gap(40),
+                          // 1. Logo Hero
+                          const Hero(
+                            tag: 'app_logo_hero',
+                            child: Material(
+                              color: Colors.transparent,
+                              child: AppLogo(
+                                animateQuestionMark: false,
+                                color: AppColors.primary,
                               ),
                             ),
                           ),
-                          const Gap(5),
+                          const Gap(30),
+
+                          // 2. Container Hero (يكبر تلقائياً ليستوعب الحقول الإضافية)
                           Expanded(
-                            flex: 3,
                             child: Hero(
-                              tag: 'primary_action_btn_hero',
-                              flightShuttleBuilder: _flightShuttleBuilder,
+                              tag: 'bottom_sheet_container_hero',
                               child: Material(
                                 color: Colors.transparent,
-                                child: CustomButton(
-                                  buttonColor: AppColors.secondary,
-                                  buttonText: 'Sign Up',
-                                  onTap: () {
-                                    if (formKey.currentState!.validate()) {
-                                      final email = emailController.text;
-                                      final password = passwordController.text;
-                                      final name = nameController.text;
-                                      debugPrint(
-                                        '❤️ SignUp: $name, $email, $password',
-                                      );
-                                    }
-                                  },
+                                child: Container(
+                                  width: double.infinity,
+                                  padding: const EdgeInsets.symmetric(
+                                    horizontal: 16.0,
+                                    vertical: 24.0,
+                                  ),
+                                  decoration: const BoxDecoration(
+                                    color: AppColors.primary,
+                                    borderRadius: BorderRadius.only(
+                                      topLeft: Radius.circular(30),
+                                      topRight: Radius.circular(30),
+                                    ),
+                                  ),
+                                  child: Column(
+                                    mainAxisAlignment: MainAxisAlignment.start,
+                                    children: [
+                                      const Gap(15),
+
+                                      // حقل الاسم الكامل
+                                      CustomTextFormField(
+                                        labelText: 'Full Name',
+                                        controller: nameController,
+                                      ),
+                                      const Gap(10),
+
+                                      // حقل الإيميل
+                                      CustomTextFormField(
+                                        labelText: 'Email',
+                                        controller: emailController,
+                                      ),
+                                      const Gap(10),
+
+                                      // حقل الباسورد
+                                      CustomTextFormField(
+                                        labelText: 'Password',
+                                        isPassword: true,
+                                        controller: passwordController,
+                                      ),
+                                      const Gap(10),
+
+                                      // حقل تأكيد كلمة المرور
+                                      CustomTextFormField(
+                                        labelText: 'Confirm Password',
+                                        isPassword: true,
+                                        controller: confirmPasswordController,
+                                      ),
+                                      const Gap(24),
+
+                                      // صف الأزرار
+                                      Row(
+                                        children: [
+                                          Expanded(
+                                            flex: 1,
+                                            child: CustomButton(
+                                              buttonText: '<<-- Sign in',
+                                              textSize: 12,
+                                              onTap: () =>
+                                                  Navigator.pop(context),
+                                            ),
+                                          ),
+                                          const Gap(8),
+                                          Expanded(
+                                            flex: 3,
+                                            child: CustomButton(
+                                              buttonColor: AppColors.secondary,
+                                              buttonText: 'Sign Up',
+                                              onTap: () {
+                                                if (formKey.currentState!
+                                                    .validate()) {
+                                                  final email =
+                                                      emailController.text;
+                                                  final password =
+                                                      passwordController.text;
+                                                  final name =
+                                                      nameController.text;
+                                                  debugPrint(
+                                                    '❤️ SignUp: $name, $email, $password',
+                                                  );
+                                                }
+                                              },
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                      const Gap(20),
+                                    ],
+                                  ),
                                 ),
                               ),
                             ),
                           ),
                         ],
                       ),
-                      const Gap(40),
-                    ],
+                    ),
                   ),
                 ),
-              ),
-            ),
+              );
+            },
           ),
         ),
       ),
-    );
-  }
-
-  Widget _flightShuttleBuilder(
-    BuildContext flightContext,
-    Animation<double> animation,
-    HeroFlightDirection flightDirection,
-    BuildContext fromHeroContext,
-    BuildContext toHeroContext,
-  ) {
-    return SingleChildScrollView(
-      physics: const NeverScrollableScrollPhysics(),
-      child: fromHeroContext.widget,
     );
   }
 }

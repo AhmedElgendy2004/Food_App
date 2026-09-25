@@ -39,146 +39,148 @@ class _SignInViewState extends State<SignInView> {
     return GestureDetector(
       onTap: () => FocusScope.of(context).unfocus(),
       child: Scaffold(
-        backgroundColor: AppColors.primary,
-        body: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 10.0),
-          child: Center(
-            child: SingleChildScrollView(
-              child: Form(
-                key: formKey,
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    // 1. Logo Hero
-                    const Hero(
-                      tag: 'app_logo_hero',
-                      child: Material(
-                        color: Colors.transparent,
-                        child: AppLogo(animateQuestionMark: false),
-                      ),
-                    ),
-                    const Gap(60),
-
-                    // 2. Email Field Hero
-                    Hero(
-                      tag: 'email_field_hero',
-                      flightShuttleBuilder: _flightShuttleBuilder,
-                      child: Material(
-                        color: Colors.transparent,
-                        child: CustomTextFormField(
-                          labelText: 'Email',
-                          controller: emailController,
-                        ),
-                      ),
-                    ),
-                    const Gap(10),
-
-                    // 3. Password Field Hero
-                    Hero(
-                      tag: 'password_field_hero',
-                      flightShuttleBuilder: _flightShuttleBuilder,
-                      child: Material(
-                        color: Colors.transparent,
-                        child: CustomTextFormField(
-                          labelText: 'Password',
-                          isPassword: true,
-                          controller: passwordController,
-                        ),
-                      ),
-                    ),
-                    const Gap(60),
-
-                    // 4. Buttons Hero
-                    Row(
-                      children: [
-                        Expanded(
-                          flex: 3,
-                          child: Hero(
-                            tag: 'primary_action_btn_hero',
-                            flightShuttleBuilder: _flightShuttleBuilder,
+        backgroundColor: AppColors.background,
+        body: SafeArea(
+          bottom: false,
+          child: LayoutBuilder(
+            builder: (context, constraints) {
+              return SingleChildScrollView(
+                physics: const ClampingScrollPhysics(),
+                child: ConstrainedBox(
+                  constraints: BoxConstraints(minHeight: constraints.maxHeight),
+                  child: IntrinsicHeight(
+                    child: Form(
+                      key: formKey,
+                      child: Column(
+                        children: [
+                          const Gap(70),
+                          // 1. Logo Hero
+                          const Hero(
+                            tag: 'app_logo_hero',
                             child: Material(
                               color: Colors.transparent,
-                              child: CustomButton(
-                                buttonColor: AppColors.secondary,
-                                buttonText: 'Sign In',
-                                onTap: () {
-                                  if (formKey.currentState!.validate()) {
-                                    final email = emailController.text;
-                                    final password = passwordController.text;
-                                    debugPrint('❤️ Login: $email, $password');
-                                  }
-                                },
+                              child: AppLogo(
+                                animateQuestionMark: false,
+                                color: AppColors.primary,
                               ),
                             ),
                           ),
-                        ),
-                        const Gap(5),
-                        Expanded(
-                          flex: 1,
-                          child: Hero(
-                            tag: 'secondary_action_btn_hero',
-                            flightShuttleBuilder: _flightShuttleBuilder,
-                            child: Material(
-                              color: Colors.transparent,
-                              child: CustomButton(
-                                buttonText: 'Sign up -->>',
-                                textSize: 12,
-                                onTap: () {
-                                  Navigator.push(
-                                    context,
-                                    createSlideRoute(const SignUpView()),
-                                  );
-                                },
+                          const Gap(70),
+
+                          // 2. Container Hero (يتمدد ويتقلص بين الصفحتين)
+                          Expanded(
+                            child: Hero(
+                              tag: 'bottom_sheet_container_hero',
+                              child: Material(
+                                color: Colors.transparent,
+                                child: Container(
+                                  width: double.infinity,
+                                  padding: const EdgeInsets.symmetric(
+                                    horizontal: 16.0,
+                                    vertical: 24.0,
+                                  ),
+                                  decoration: const BoxDecoration(
+                                    color: AppColors.primary,
+                                    borderRadius: BorderRadius.only(
+                                      topLeft: Radius.circular(30),
+                                      topRight: Radius.circular(30),
+                                    ),
+                                  ),
+                                  child: Column(
+                                    mainAxisAlignment: MainAxisAlignment.start,
+                                    children: [
+                                      const Gap(30),
+
+                                      // حقل الإيميل
+                                      CustomTextFormField(
+                                        labelText: 'Email',
+                                        controller: emailController,
+                                      ),
+                                      const Gap(12),
+
+                                      // حقل الباسورد
+                                      CustomTextFormField(
+                                        labelText: 'Password',
+                                        isPassword: true,
+                                        controller: passwordController,
+                                      ),
+                                      const Gap(32),
+
+                                      // صف الأزرار
+                                      Row(
+                                        children: [
+                                          Expanded(
+                                            flex: 3,
+                                            child: CustomButton(
+                                              buttonColor: AppColors.secondary,
+                                              buttonText: 'Sign In',
+                                              onTap: () {
+                                                if (formKey.currentState!.validate()) {
+                                                  final email = emailController.text;
+                                                  final password = passwordController.text;
+                                                  debugPrint('❤️ Login: $email, $password');
+                                                }
+                                              },
+                                            ),
+                                          ),
+                                          const Gap(8),
+                                          Expanded(
+                                            flex: 1,
+                                            child: CustomButton(
+                                              buttonText: 'Sign up -->>',
+                                              textSize: 12,
+                                              onTap: () {
+                                                Navigator.push(
+                                                  context,
+                                                  createSlideRoute(const SignUpView()),
+                                                );
+                                              },
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                      const Gap(20),
+
+                                      // زر التخطي المؤقت
+                                      TextButton(
+                                        onPressed: () {
+                                          Navigator.pushReplacement(
+                                            context,
+                                            MaterialPageRoute(
+                                              builder: (context) => const Root(),
+                                            ),
+                                          );
+                                        },
+                                        style: TextButton.styleFrom(
+                                          foregroundColor: AppColors.secondary,
+                                          splashFactory: NoSplash.splashFactory,
+                                        ),
+                                        child: const Text(
+                                          'Skip for now ->',
+                                          style: TextStyle(
+                                            fontSize: 14,
+                                            fontWeight: FontWeight.w600,
+                                            decoration: TextDecoration.underline,
+                                          ),
+                                        ),
+                                      ),
+                                      const Gap(10),
+                                    ],
+                                  ),
+                                ),
                               ),
                             ),
                           ),
-                        ),
-                      ],
-                    ),
-                    const Gap(24),
-
-                    // 5. زر التخطي المؤقت إلى صفحة الـ Root
-                    TextButton(
-                      onPressed: () {
-                        Navigator.pushReplacement(
-                          context,
-                          MaterialPageRoute(builder: (context) => const Root()),
-                        );
-                      },
-                      style: TextButton.styleFrom(
-                        foregroundColor: AppColors.secondary,
-                        splashFactory: NoSplash.splashFactory,
-                      ),
-                      child: const Text(
-                        'Skip for now ->',
-                        style: TextStyle(
-                          fontSize: 14,
-                          fontWeight: FontWeight.w600,
-                          decoration: TextDecoration.underline,
-                        ),
+                        ],
                       ),
                     ),
-                    const Gap(20),
-                  ],
+                  ),
                 ),
-              ),
-            ),
+              );
+            },
           ),
         ),
       ),
-    );
-  }
-
-  Widget _flightShuttleBuilder(
-    BuildContext flightContext,
-    Animation<double> animation,
-    HeroFlightDirection flightDirection,
-    BuildContext fromHeroContext,
-    BuildContext toHeroContext,
-  ) {
-    return SingleChildScrollView(
-      physics: const NeverScrollableScrollPhysics(),
-      child: fromHeroContext.widget,
     );
   }
 }
