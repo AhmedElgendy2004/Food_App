@@ -5,7 +5,6 @@ import 'package:hungry_food_app/core/widgets/app_logo.dart';
 import 'package:hungry_food_app/core/widgets/custom_button.dart';
 import 'package:hungry_food_app/core/widgets/custom_text_form_field.dart';
 import 'package:hungry_food_app/features/auth/view/sign_up_view.dart';
-import 'package:hungry_food_app/features/auth/widgets/create_slide_route.dart';
 import 'package:hungry_food_app/root.dart';
 
 class SignInView extends StatefulWidget {
@@ -115,10 +114,15 @@ class _SignInViewState extends State<SignInView> {
                                               buttonColor: AppColors.secondary,
                                               buttonText: 'Sign In',
                                               onTap: () {
-                                                if (formKey.currentState!.validate()) {
-                                                  final email = emailController.text;
-                                                  final password = passwordController.text;
-                                                  debugPrint('❤️ Login: $email, $password');
+                                                if (formKey.currentState!
+                                                    .validate()) {
+                                                  final email =
+                                                      emailController.text;
+                                                  final password =
+                                                      passwordController.text;
+                                                  debugPrint(
+                                                    '❤️ Login: $email, $password',
+                                                  );
                                                 }
                                               },
                                             ),
@@ -132,7 +136,10 @@ class _SignInViewState extends State<SignInView> {
                                               onTap: () {
                                                 Navigator.push(
                                                   context,
-                                                  createSlideRoute(const SignUpView()),
+                                                  MaterialPageRoute(
+                                                    builder: (context) =>
+                                                        const SignUpView(),
+                                                  ),
                                                 );
                                               },
                                             ),
@@ -147,7 +154,8 @@ class _SignInViewState extends State<SignInView> {
                                           Navigator.pushReplacement(
                                             context,
                                             MaterialPageRoute(
-                                              builder: (context) => const Root(),
+                                              builder: (context) =>
+                                                  const Root(),
                                             ),
                                           );
                                         },
@@ -160,7 +168,8 @@ class _SignInViewState extends State<SignInView> {
                                           style: TextStyle(
                                             fontSize: 14,
                                             fontWeight: FontWeight.w600,
-                                            decoration: TextDecoration.underline,
+                                            decoration:
+                                                TextDecoration.underline,
                                           ),
                                         ),
                                       ),
