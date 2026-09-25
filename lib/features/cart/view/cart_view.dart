@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:hungry_food_app/features/cart/widgets/card_cart_item.dart';
+import 'package:hungry_food_app/features/checkout/view/checkout_view.dart';
 import 'package:hungry_food_app/features/product/widgets/total_section.dart';
 
 class CartView extends StatelessWidget {
@@ -23,7 +24,16 @@ class CartView extends StatelessWidget {
             ),
 
             /// Total Section
-            const TotalSection(accountTotal: 18.19, textButton: 'Add To Cart'),
+            TotalSection(
+              accountTotal: 18.19,
+              textButton: 'checkout',
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => const CheckoutView()),
+                );
+              },
+            ),
           ],
         ),
       ),

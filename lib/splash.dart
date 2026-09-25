@@ -11,10 +11,33 @@ class SplashView extends StatefulWidget {
   State<SplashView> createState() => _SplashViewState();
 }
 
-class _SplashViewState extends State<SplashView> {
+class _SplashViewState extends State<SplashView>
+    with SingleTickerProviderStateMixin {
+  late AnimationController _imageController;
+  late Animation<double> _imageFadeAnimation;
+  late Animation<double> _imageScaleAnimation;
+
   @override
   void initState() {
     super.initState();
+
+    // إعداد أنيميشن ظهور الصورة في ثانيتين
+    _imageController = AnimationController(
+      vsync: this,
+      duration: const Duration(milliseconds: 2000),
+    );
+
+    _imageFadeAnimation = CurvedAnimation(
+      parent: _imageController,
+      curve: Curves.easeOutCubic,
+    );
+
+    _imageScaleAnimation = Tween<double>(begin: 0.85, end: 1.0).animate(
+      CurvedAnimation(parent: _imageController, curve: Curves.easeOutCubic),
+    );
+
+    _imageController.forward();
+
     _navigateToNextScreen();
   }
 
@@ -29,6 +52,12 @@ class _SplashViewState extends State<SplashView> {
   }
 
   @override
+  void dispose() {
+    _imageController.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: AppColors.primary,
@@ -40,9 +69,18 @@ class _SplashViewState extends State<SplashView> {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             const Spacer(flex: 2),
-            const AppLogo(),
+            const Hero(
+              tag: 'app_logo_hero',
+              child: Material(color: Colors.transparent, child: AppLogo()),
+            ),
             const Spacer(flex: 2),
-            Image.asset(AppAsset.splashImage),
+            FadeTransition(
+              opacity: _imageFadeAnimation,
+              child: ScaleTransition(
+                scale: _imageScaleAnimation,
+                child: Image.asset(AppAsset.splashImage),
+              ),
+            ),
           ],
         ),
       ),

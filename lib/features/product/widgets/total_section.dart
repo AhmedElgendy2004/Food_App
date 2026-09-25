@@ -4,10 +4,16 @@ import 'package:hungry_food_app/core/constants/app_colors.dart';
 import 'package:hungry_food_app/core/widgets/custom_button.dart';
 
 class TotalSection extends StatelessWidget {
-  const TotalSection({super.key, this.accountTotal = 18.19, required this.textButton});
+  const TotalSection({
+    super.key,
+    this.accountTotal = 18.19,
+    required this.textButton,
+    this.onTap,
+  });
 
   final double accountTotal;
-  final String textButton ;
+  final String textButton;
+  final Function()? onTap;
 
   @override
   Widget build(BuildContext context) {
@@ -39,6 +45,7 @@ class TotalSection extends StatelessWidget {
               buttonText: textButton,
               height: 60,
               radius: 18,
+              onTap: onTap,
             ),
           ),
         ],

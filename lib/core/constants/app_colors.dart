@@ -10,6 +10,7 @@ class AppColors {
   static const Color categoryButton = Color(0xFFF3F4F6);
   static const Color spicy = Colors.red;
   static const Color backgroundCard = Color(0xFF322827);
+  static const Color textCard = Color(0xFF7D7D7D);
 
   // static const Color textColor1 = Color(0xFF0D1030);
   // static const Color textColor2 = Color(0xFF7C7C7C);

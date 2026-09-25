@@ -23,8 +23,12 @@ class AppLogo extends StatefulWidget {
   State<AppLogo> createState() => _AppLogoState();
 }
 
-class _AppLogoState extends State<AppLogo> with SingleTickerProviderStateMixin {
-  late AnimationController _controller;
+class _AppLogoState extends State<AppLogo> with TickerProviderStateMixin {
+  late AnimationController _introController;
+  late Animation<double> _introFadeAnimation;
+  late Animation<double> _introScaleAnimation;
+
+  late AnimationController _questionController;
   late Animation<double> _rotationAnimation;
   late Animation<double> _scaleAnimation;
 
@@ -32,28 +36,43 @@ class _AppLogoState extends State<AppLogo> with SingleTickerProviderStateMixin {
   void initState() {
     super.initState();
 
-    _controller = AnimationController(
+    // 1. متحكم الظهور الأولي
+    _introController = AnimationController(
+      vsync: this,
+      duration: const Duration(milliseconds: 2000),
+    );
+
+    _introFadeAnimation = CurvedAnimation(
+      parent: _introController,
+      curve: Curves.easeOutCubic,
+    );
+
+    _introScaleAnimation = Tween<double>(begin: 0.85, end: 1.0).animate(
+      CurvedAnimation(parent: _introController, curve: Curves.easeOutCubic),
+    );
+
+    // 2. متحكم حركة علامة الاستفهام
+    _questionController = AnimationController(
       vsync: this,
       duration: const Duration(milliseconds: 1000),
     );
 
-    // حركة ميلان بسيطة توحي بالتساؤل والحيرة
-    _rotationAnimation =
-        Tween<double>(
-          begin: -0.08, // ميلان لليسار قليلاً
-          end: 0.1, // ميلان لليمين مع هزة خفيفة
-        ).animate(
-          CurvedAnimation(parent: _controller, curve: Curves.easeInOutSine),
-        );
+    _rotationAnimation = Tween<double>(begin: -0.08, end: 0.1).animate(
+      CurvedAnimation(parent: _questionController, curve: Curves.easeInOutSine),
+    );
 
-    // نبضة حجم طفيفة مرافقة للميلان
-    _scaleAnimation = Tween<double>(
-      begin: 1.0,
-      end: 1.15,
-    ).animate(CurvedAnimation(parent: _controller, curve: Curves.easeInOut));
+    _scaleAnimation = Tween<double>(begin: 1.0, end: 1.15).animate(
+      CurvedAnimation(parent: _questionController, curve: Curves.easeInOut),
+    );
 
+    // التحكم في تشغيل أو تخطي الأنيميشن
     if (widget.animateQuestionMark) {
-      _controller.repeat(reverse: true);
+      _introController.forward();
+      _questionController.repeat(reverse: true);
+    } else {
+      // إيقاف وتثبيت القيم عند النهاية ليظهر العنصر مكتملاً بدون تأخير
+      _introController.value = 1.0;
+      _questionController.value = 0.0;
     }
   }
 
@@ -62,17 +81,21 @@ class _AppLogoState extends State<AppLogo> with SingleTickerProviderStateMixin {
     super.didUpdateWidget(oldWidget);
     if (widget.animateQuestionMark != oldWidget.animateQuestionMark) {
       if (widget.animateQuestionMark) {
-        _controller.repeat(reverse: true);
+        _introController.forward(from: 0.0);
+        _questionController.repeat(reverse: true);
       } else {
-        _controller.stop();
-        _controller.reset();
+        _introController.stop();
+        _introController.value = 1.0;
+        _questionController.stop();
+        _questionController.reset();
       }
     }
   }
 
   @override
   void dispose() {
-    _controller.dispose();
+    _introController.dispose();
+    _questionController.dispose();
     super.dispose();
   }
 
@@ -80,12 +103,43 @@ class _AppLogoState extends State<AppLogo> with SingleTickerProviderStateMixin {
   Widget build(BuildContext context) {
     final effectiveQuestionColor = widget.questionMarkColor ?? widget.color;
 
+    // علامة الاستفهام (متحركة أو ثابتة)
+    Widget questionMarkWidget = Text(
+      ' ?',
+      style: TextStyle(
+        fontFamily: 'LuckiestGuy',
+        fontSize: widget.fontSize,
+        color: effectiveQuestionColor,
+      ),
+    );
+
+    if (widget.animateQuestionMark) {
+      questionMarkWidget = AnimatedBuilder(
+        animation: _questionController,
+        builder: (context, child) {
+          return Transform(
+            alignment: Alignment.bottomCenter,
+            transform: Matrix4.identity()
+              ..rotateZ(_rotationAnimation.value)
+              ..multiply(
+                Matrix4.diagonal3Values(
+                  _scaleAnimation.value,
+                  _scaleAnimation.value,
+                  1.0,
+                ),
+              ),
+            child: child,
+          );
+        },
+        child: RepaintBoundary(child: questionMarkWidget),
+      );
+    }
+
     Widget content = Row(
       mainAxisSize: MainAxisSize.min,
       mainAxisAlignment: MainAxisAlignment.start,
       crossAxisAlignment: CrossAxisAlignment.baseline,
       textBaseline: TextBaseline.alphabetic,
-    
       children: [
         Text(
           widget.text,
@@ -95,46 +149,27 @@ class _AppLogoState extends State<AppLogo> with SingleTickerProviderStateMixin {
             color: widget.color,
           ),
         ),
-        AnimatedBuilder(
-          animation: _controller,
-          builder: (context, child) {
-            return Transform(
-              alignment: Alignment.bottomCenter,
-              transform: Matrix4.identity()
-                ..rotateZ(_rotationAnimation.value)
-                ..multiply(
-                  Matrix4.diagonal3Values(
-                    _scaleAnimation.value,
-                    _scaleAnimation.value,
-                    1.0,
-                  ),
-                ),
-              child: child,
-            );
-          },
-          child: RepaintBoundary(
-            child: Text(
-              ' ?',
-              style: TextStyle(
-                fontFamily: 'LuckiestGuy',
-                fontSize: widget.fontSize,
-                color: effectiveQuestionColor,
-              ),
-            ),
-          ),
-        ),
+        questionMarkWidget,
       ],
     );
+
+    // تطبيق أنيميشن الظهور فقط لو animateQuestionMark مفعلة
+    Widget finalContent = widget.animateQuestionMark
+        ? FadeTransition(
+            opacity: _introFadeAnimation,
+            child: ScaleTransition(scale: _introScaleAnimation, child: content),
+          )
+        : content;
 
     if (widget.onTap != null) {
       return InkWell(
         onTap: widget.onTap,
         splashColor: Colors.transparent,
         highlightColor: Colors.transparent,
-        child: content,
+        child: finalContent,
       );
     }
 
-    return content;
+    return finalContent;
   }
 }
