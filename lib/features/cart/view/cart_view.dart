@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:hungry_food_app/core/widgets/custom_bottom_sheet.dart';
 import 'package:hungry_food_app/features/cart/widgets/card_cart_item.dart';
 import 'package:hungry_food_app/features/checkout/view/checkout_view.dart';
-import 'package:hungry_food_app/features/product/widgets/total_section.dart';
 
 class CartView extends StatelessWidget {
   const CartView({super.key});
@@ -22,20 +22,22 @@ class CartView extends StatelessWidget {
                 },
               ),
             ),
-
-            /// Total Section
-            TotalSection(
-              accountTotal: 18.19,
-              textButton: 'checkout',
-              onTap: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => const CheckoutView()),
-                );
-              },
-            ),
           ],
         ),
+      ),
+
+      /// Total Section
+      bottomSheet: CustomBottomSheet(
+        buttonText: 'checkout',
+        accountTotal: 18.19,
+        height: 90.0,
+
+        onTap: () {
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => const CheckoutView()),
+          );
+        },
       ),
     );
   }

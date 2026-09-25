@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_gap/flutter_gap.dart';
+import 'package:hungry_food_app/core/widgets/custom_bottom_sheet.dart';
 import 'package:hungry_food_app/features/checkout/widgets/invoice_card.dart';
 import 'package:hungry_food_app/features/checkout/widgets/payment_section.dart';
 import 'package:hungry_food_app/features/checkout/widgets/success_dialog.dart';
-import 'package:hungry_food_app/features/product/widgets/total_section.dart';
 
 class CheckoutView extends StatelessWidget {
   const CheckoutView({super.key});
@@ -46,36 +46,15 @@ class CheckoutView extends StatelessWidget {
           ),
         ),
       ),
-      bottomSheet: Container(
-        decoration: const BoxDecoration(
-          color: Colors.white,
-          boxShadow: [
-            BoxShadow(
-              color: Colors.black12,
-              blurRadius: 10.0,
-              offset: Offset(0, -2),
-            ),
-          ],
-          borderRadius: BorderRadius.only(
-            topLeft: Radius.circular(24.0),
-            topRight: Radius.circular(24.0),
-          ),
-        ),
-        height: 110.0,
-        child: Padding(
-          padding: EdgeInsets.only(left: 10.0, right: 10.0, bottom: 30.0),
-          child: TotalSection(
-            textButton: 'Pay Now',
-            onTap: () {
-              showDialog(
-                context: context,
-                builder: (BuildContext context) {
-                  return const SuccessDialog();
-                },
-              );
-            },
-          ),
-        ),
+      bottomSheet: CustomBottomSheet(
+        buttonText: 'Pay Now',
+        accountTotal: 18.19,
+        onTap: () {
+          showDialog(
+            context: context,
+            builder: (context) => const SuccessDialog(),
+          );
+        },
       ),
     );
   }

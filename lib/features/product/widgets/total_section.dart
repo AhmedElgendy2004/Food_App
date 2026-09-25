@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_gap/flutter_gap.dart';
 import 'package:hungry_food_app/core/constants/app_colors.dart';
 import 'package:hungry_food_app/core/widgets/custom_button.dart';
 
@@ -22,13 +21,13 @@ class TotalSection extends StatelessWidget {
       child: Row(
         children: [
           Expanded(
-            flex: 2,
+            flex: 5,
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 const Text(
                   "Total",
-                  style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                  style: TextStyle(fontSize: 17, fontWeight: FontWeight.bold),
                 ),
                 Text(
                   "💲$accountTotal",
@@ -37,9 +36,8 @@ class TotalSection extends StatelessWidget {
               ],
             ),
           ),
-          const Gap(20),
           Expanded(
-            flex: 3,
+            flex: 5,
             child: CustomButton(
               buttonColor: AppColors.primary,
               buttonText: textButton,
