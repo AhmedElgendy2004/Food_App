@@ -14,38 +14,53 @@ class Root extends StatefulWidget {
 }
 
 class _RootState extends State<Root> {
-  //
   late PageController _pageController;
   late List<Widget> screens;
   int currentIndex = 0;
 
   @override
   void initState() {
+    super.initState();
     screens = const [HomeView(), CartView(), OrderHistoryView(), ProfileView()];
     _pageController = PageController(initialPage: currentIndex);
-    super.initState();
+  }
+
+  @override
+  void dispose() {
+    _pageController.dispose();
+    super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: AppColors.secondary,
-      body: PageView(controller: _pageController, children: screens),
+      // الشرط: لو الصفحة الحالية هي صفحة البروفايل (Index رقم 3) يكون أبيض
+      body: PageView(
+        controller: _pageController,
+        // لتحديث اللون وتحديد التاب النشط عند السحب اليدوي بين الشاشات
+        onPageChanged: (index) {
+          setState(() {
+            currentIndex = index;
+          });
+        },
+        children: screens,
+      ),
 
       bottomNavigationBar: ClipRRect(
-        borderRadius: BorderRadius.vertical(top: Radius.circular(30)),
+        borderRadius: const BorderRadius.vertical(top: Radius.circular(30)),
         child: SizedBox(
           height: 100,
           child: BottomNavigationBar(
             currentIndex: currentIndex,
-            backgroundColor: AppColors.primary,
-            selectedItemColor: AppColors.selected,
+            backgroundColor: 
+                 AppColors.primary,
+            selectedItemColor: 
+                 AppColors.selected,
             selectedIconTheme: const IconThemeData(size: 36),
             unselectedIconTheme: const IconThemeData(size: 24),
-            unselectedItemColor: AppColors.unselected,
+            unselectedItemColor:  AppColors.unselected,
             type: BottomNavigationBarType.fixed,
-
-            items: [
+            items: const [
               BottomNavigationBarItem(
                 icon: Icon(Icons.home_outlined),
                 activeIcon: Icon(Icons.home),
@@ -67,10 +82,12 @@ class _RootState extends State<Root> {
                 label: 'Profile',
               ),
             ],
-            onTap: (indexScreen) => setState(() {
-              currentIndex = indexScreen;
+            onTap: (indexScreen) {
+              setState(() {
+                currentIndex = indexScreen;
+              });
               _pageController.jumpToPage(indexScreen);
-            }),
+            },
           ),
         ),
       ),

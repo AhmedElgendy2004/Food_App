@@ -20,22 +20,16 @@ class _QuantitySelectorState extends State<QuantitySelector> {
         Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            CustomButton(
-              enableAnimation: false,
-
-              buttonText: "-",
-              textSize: 24,
+            buttonQuantity(
               onTap: () {
                 if (quantity > 1) {
                   setState(() {
-                    if (quantity > 1) {
-                      quantity--;
-                    }
+                    quantity--;
                   });
                 }
               },
-              width: 40,
-              height: 40,
+              icon: Icons.remove,
+              isRight: false,
             ),
             SizedBox(
               width: 50,
@@ -45,17 +39,14 @@ class _QuantitySelectorState extends State<QuantitySelector> {
                 size: 20,
               ),
             ),
-            CustomButton(
-              enableAnimation: false,
-              buttonText: "+",
-              textSize: 24,
+            buttonQuantity(
+              isRight: true,
               onTap: () {
                 setState(() {
                   quantity++;
                 });
               },
-              width: 40,
-              height: 40,
+              icon: Icons.add,
             ),
           ],
         ),
@@ -65,15 +56,42 @@ class _QuantitySelectorState extends State<QuantitySelector> {
         CustomButton(
           enableAnimation: false,
           buttonText: "Remove",
+          icon: Icons.delete,
+          width: 140,
           onTap: () {
             setState(() {
               quantity = 0;
             });
           },
-          radius: 24,
-          width: 125,
+          radius: 29,
         ),
       ],
     );
   }
+}
+
+Widget buttonQuantity({
+  required VoidCallback onTap,
+  required IconData icon,
+  required bool isRight,
+}) {
+  return GestureDetector(
+    onTap: onTap,
+    child: Container(
+      width: 40,
+      height: 40,
+      decoration: BoxDecoration(
+        color: AppColors.primary,
+        borderRadius: BorderRadius.only(
+          // إذا كان الزر (+) تُدوّر الحواف اليمنى
+          topRight: Radius.circular(isRight ? 20 : 0),
+          bottomRight: Radius.circular(isRight ? 20 : 0),
+          // إذا كان الزر (-) تُدوّر الحواف اليسرى
+          topLeft: Radius.circular(isRight ? 0 : 20),
+          bottomLeft: Radius.circular(isRight ? 0 : 20),
+        ),
+      ),
+      child: Icon(icon, color: AppColors.secondary),
+    ),
+  );
 }

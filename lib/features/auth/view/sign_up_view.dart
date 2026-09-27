@@ -99,14 +99,14 @@ class _SignUpViewState extends State<SignUpView> {
                                         labelText: 'Full Name',
                                         controller: nameController,
                                       ),
-                                      const Gap(10),
+                                      const Gap(20),
 
                                       // حقل الإيميل
                                       CustomTextFormField(
                                         labelText: 'Email',
                                         controller: emailController,
                                       ),
-                                      const Gap(10),
+                                      const Gap(20),
 
                                       // حقل الباسورد
                                       CustomTextFormField(
@@ -114,7 +114,7 @@ class _SignUpViewState extends State<SignUpView> {
                                         isPassword: true,
                                         controller: passwordController,
                                       ),
-                                      const Gap(10),
+                                      const Gap(20),
 
                                       // حقل تأكيد كلمة المرور
                                       CustomTextFormField(
@@ -128,20 +128,24 @@ class _SignUpViewState extends State<SignUpView> {
                                       Row(
                                         children: [
                                           Expanded(
-                                            flex: 1,
+                                            flex: 11,
                                             child: CustomButton(
-                                              buttonText: '<<-- Sign in',
+                                              buttonText: 'Sign in',
+                                              icon: Icons.arrow_back_ios,
+                                              iconIsLift: true,
                                               textSize: 12,
                                               onTap: () =>
                                                   Navigator.pop(context),
                                             ),
                                           ),
-                                          const Gap(8),
+                                          Expanded(flex: 1, child: SizedBox()),
                                           Expanded(
-                                            flex: 3,
+                                            flex: 27,
                                             child: CustomButton(
                                               buttonColor: AppColors.secondary,
                                               buttonText: 'Sign Up',
+                                              height: 55,
+
                                               onTap: () {
                                                 if (formKey.currentState!
                                                     .validate()) {

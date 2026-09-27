@@ -91,6 +91,7 @@ class ProductDetailsView extends StatelessWidget {
                   ),
                 ),
               ),
+
               const Gap(20),
             ],
           ),

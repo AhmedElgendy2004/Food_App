@@ -7,6 +7,9 @@ class AppAsset {
   static const String bergerSideOptionsImage = 'assets/images/png/image 14.png';
   static const String dollarImage = 'assets/images/png/dollar.png';
   static const String visaImage = 'assets/images/png/visa.png';
+    static const String profileImage = 'assets/images/png/profile.jpg';
+
+
 
   //SVG
   static const String dollarImage1 = 'assets/images/svg/dollar.svg';

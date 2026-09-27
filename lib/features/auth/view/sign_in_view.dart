@@ -95,7 +95,7 @@ class _SignInViewState extends State<SignInView> {
                                         labelText: 'Email',
                                         controller: emailController,
                                       ),
-                                      const Gap(12),
+                                      const Gap(20),
 
                                       // حقل الباسورد
                                       CustomTextFormField(
@@ -109,10 +109,11 @@ class _SignInViewState extends State<SignInView> {
                                       Row(
                                         children: [
                                           Expanded(
-                                            flex: 3,
+                                            flex: 27,
                                             child: CustomButton(
                                               buttonColor: AppColors.secondary,
                                               buttonText: 'Sign In',
+                                              height: 55,
                                               onTap: () {
                                                 if (formKey.currentState!
                                                     .validate()) {
@@ -127,11 +128,14 @@ class _SignInViewState extends State<SignInView> {
                                               },
                                             ),
                                           ),
-                                          const Gap(8),
+
+                                          Expanded(flex: 1, child: SizedBox()),
+
                                           Expanded(
-                                            flex: 1,
+                                            flex: 10,
                                             child: CustomButton(
-                                              buttonText: 'Sign up -->>',
+                                              buttonText: 'Sign up',
+                                              icon: Icons.arrow_forward_ios,
                                               textSize: 12,
                                               onTap: () {
                                                 Navigator.push(

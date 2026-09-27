@@ -5,44 +5,53 @@ class CustomTextFormField extends StatefulWidget {
   const CustomTextFormField({
     super.key,
     required this.labelText,
-    required this.controller,
+    this.controller,
     this.isPassword = false,
+    this.readOnly = false, // خيار القراءة فقط (افتراضياً false للـ Auth)
   });
 
   final String labelText;
   final bool isPassword;
-  final TextEditingController controller;
+  final TextEditingController? controller;
+  final bool readOnly;
 
   @override
   State<CustomTextFormField> createState() => _CustomTextFormFieldState();
 }
 
-bool _isVisible = true;
-
 class _CustomTextFormFieldState extends State<CustomTextFormField> {
+  late bool _isVisible;
+
   @override
   void initState() {
-    _isVisible = widget.isPassword;
     super.initState();
+    _isVisible = widget.isPassword;
   }
 
   @override
   Widget build(BuildContext context) {
     return TextFormField(
       controller: widget.controller,
-
+      readOnly: widget.readOnly, // منع التعديل وفتح الكيبورد
+      enableInteractiveSelection: !widget.readOnly, // منع التحديد في شاشة العرض
       cursorColor: Colors.white,
       cursorHeight: 20,
-      style: TextStyle(color: Colors.white),
-      //  validator
+
+      style: const TextStyle(
+        color: Colors.white,
+        fontWeight: FontWeight.w600,
+        fontSize: 16,
+      ),
       validator: (v) {
-        if (v == null || v.isEmpty) {
+        if (!widget.readOnly && (v == null || v.isEmpty)) {
           return 'Please enter ${widget.labelText}';
         }
         return null;
       },
       obscureText: _isVisible,
       decoration: InputDecoration(
+        floatingLabelBehavior: FloatingLabelBehavior
+            .always, // يجعل الـ Label دائمًا أعلى الإطار كما في الصورة
         suffixIcon: widget.isPassword
             ? GestureDetector(
                 onTap: () {
@@ -50,32 +59,35 @@ class _CustomTextFormFieldState extends State<CustomTextFormField> {
                     _isVisible = !_isVisible;
                   });
                 },
-                child: _isVisible
-                    ? Icon(CupertinoIcons.eye, color: Colors.white)
-                    : Icon(CupertinoIcons.eye_slash, color: Colors.white),
+                child: Icon(
+                  _isVisible ? CupertinoIcons.eye : CupertinoIcons.eye_slash,
+                  color: Colors.white,
+                ),
               )
             : null,
-
         labelText: widget.labelText,
-        labelStyle: TextStyle(color: Colors.white),
-        hintStyle: TextStyle(color: Colors.white),
-        // Border styles
+
+        labelStyle: TextStyle(
+          color: Colors.white.withValues(alpha: 0.8),
+          fontSize: 18,
+          fontWeight: FontWeight.w500,
+        ),
+        // حدود الحقل
         enabledBorder: OutlineInputBorder(
-          borderSide: BorderSide(color: Colors.white),
-          borderRadius: BorderRadius.circular(14.0),
+          borderSide: const BorderSide(color: Colors.white, width: 1.5),
+          borderRadius: BorderRadius.circular(16.0),
         ),
         focusedBorder: OutlineInputBorder(
-          borderSide: BorderSide(color: Colors.white),
-          borderRadius: BorderRadius.circular(14.0),
+          borderSide: const BorderSide(color: Colors.white, width: 1.5),
+          borderRadius: BorderRadius.circular(16.0),
         ),
-        //Error style
         errorBorder: OutlineInputBorder(
-          borderSide: BorderSide(color: Colors.red),
-          borderRadius: BorderRadius.circular(14.0),
+          borderSide: const BorderSide(color: Colors.red),
+          borderRadius: BorderRadius.circular(16.0),
         ),
         focusedErrorBorder: OutlineInputBorder(
-          borderSide: BorderSide(color: Colors.red),
-          borderRadius: BorderRadius.circular(14.0),
+          borderSide: const BorderSide(color: Colors.red),
+          borderRadius: BorderRadius.circular(16.0),
         ),
       ),
     );

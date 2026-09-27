@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:hungry_food_app/core/constants/app_colors.dart';
 import 'package:hungry_food_app/core/widgets/custom_button.dart';
 import 'package:hungry_food_app/core/widgets/custom_text.dart';
+import 'package:hungry_food_app/root.dart';
 
 class SuccessDialog extends StatelessWidget {
   const SuccessDialog({super.key});
@@ -36,8 +37,11 @@ class SuccessDialog extends StatelessWidget {
             const SizedBox(height: 16),
             CustomButton(
               onTap: () {
-                Navigator.of(context).pop();
-                Navigator.of(context).pop();
+                Navigator.pushAndRemoveUntil(
+                  context,
+                  MaterialPageRoute(builder: (context) => const Root()),
+                  (route) => false,
+                );
               },
               buttonText: "Go Back",
               radius: 16,

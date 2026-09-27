@@ -14,7 +14,7 @@ class CardCartItem extends StatelessWidget {
         child: Row(
           children: [
             Expanded(
-              flex: 1,
+              flex: 2,
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
@@ -28,7 +28,7 @@ class CardCartItem extends StatelessWidget {
                 ],
               ),
             ),
-            Expanded(flex: 1, child: QuantitySelector()),
+            Expanded(flex: 2, child: QuantitySelector()),
           ],
         ),
       ),

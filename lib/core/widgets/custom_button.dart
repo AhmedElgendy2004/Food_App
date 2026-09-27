@@ -15,6 +15,8 @@ class CustomButton extends StatelessWidget {
     this.textSize = 17,
     this.radius = 10,
     this.enableAnimation = true,
+    this.icon,
+    this.iconIsLift = false,
   });
 
   final String buttonText;
@@ -26,6 +28,8 @@ class CustomButton extends StatelessWidget {
   final EdgeInsetsGeometry margin;
   final double textSize;
   final bool enableAnimation;
+  final IconData? icon;
+  final bool iconIsLift;
 
   @override
   Widget build(BuildContext context) {
@@ -38,15 +42,41 @@ class CustomButton extends StatelessWidget {
         width: width,
         decoration: BoxDecoration(
           color: buttonColor,
-          border: Border.all(color: AppColors.secondary, width: 4),
+          border: Border.all(
+            color: (buttonColor == AppColors.secondary)
+                ? AppColors.primary
+                : AppColors.secondary,
+            width: 3,
+          ),
           borderRadius: BorderRadius.circular(radius),
         ),
-        child: CustomText(
-          text: buttonText,
-          size: textSize,
-          color: (buttonColor == AppColors.secondary)
-              ? AppColors.primary
-              : AppColors.secondary,
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            // ignore: unnecessary_null_comparison
+            if (Icon != null && iconIsLift)
+              Icon(
+                icon,
+                color: (buttonColor == AppColors.secondary)
+                    ? AppColors.primary
+                    : AppColors.secondary,
+              ),
+            CustomText(
+              text: buttonText,
+              size: textSize,
+              color: (buttonColor == AppColors.secondary)
+                  ? AppColors.primary
+                  : AppColors.secondary,
+            ),
+            // ignore: unnecessary_null_comparison
+            if (Icon != null && !iconIsLift)
+              Icon(
+                icon,
+                color: (buttonColor == AppColors.secondary)
+                    ? AppColors.primary
+                    : AppColors.secondary,
+              ),
+          ],
         ),
       ),
     );

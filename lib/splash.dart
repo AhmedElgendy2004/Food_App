@@ -42,7 +42,7 @@ class _SplashViewState extends State<SplashView>
   }
 
   void _navigateToNextScreen() {
-    Future.delayed(const Duration(seconds: 4), () {
+    Future.delayed(const Duration(seconds: 5), () {
       if (!mounted) return;
       Navigator.pushReplacement(
         context,

@@ -69,7 +69,7 @@ class _ToppingCardState extends State<ToppingCard> {
             children: [
               // مساحة الصورة والطبقة الشفافة
               Container(
-                height: 80,
+                height: 90,
                 width: double.infinity,
                 clipBehavior: Clip.antiAlias,
                 decoration: BoxDecoration(
@@ -80,7 +80,7 @@ class _ToppingCardState extends State<ToppingCard> {
                   alignment: Alignment.center,
                   children: [
                     Padding(
-                      padding: const EdgeInsets.all(8.0),
+                      padding: const EdgeInsets.all(5.0),
                       child: Image.asset(widget.imagePath, fit: BoxFit.contain),
                     ),
                     if (count > 0) ...[
